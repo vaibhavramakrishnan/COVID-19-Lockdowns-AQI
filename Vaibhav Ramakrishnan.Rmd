@@ -1,0 +1,294 @@
+---
+title: "Term Project - Impact of COVID-19 Lockdowns on the Air Quality Index"
+author: "Vaibhav Ramakrishnan"
+date: "2022-12-09"
+output: pdf_document
+bibliography: Term project.bib
+latex_engine: xelatex
+mainfont: Times New Roman
+fontsize: 12pt
+geometry: margin=1in
+header-includes:
+  \usepackage{float}
+ \floatplacement{figure}{H}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(kableExtra)
+```
+
+# 1) Introduction
+
+
+Countries began developing various strategies to combat COVID-19's spread in early 2020. One of the most visible methods was the implementation of nationwide lockdowns and the prohibition of international travel. While this initially slowed the spread of COVID-19, it was not economically feasible in the long run. However, it did demonstrate to the world how the strict lockdowns benefited the environment, as air quality improved as a result of the factories being closed and fewer vehicles on the roads, leading to reduced transportation and emissions, among other factors. The first case of COVID-19 in India was reported on January 30, 2020, in the state of Kerala. The infected person was an international student in Wuhan, China, who had returned to India for vacation. As the number of reported cases increased across the country to around 500, the Indian government decided to impose a 21-day nationwide lockdown on March 25, 2020. As a result, major industrial activities were halted, public transportation was halted, people were confined to their homes, social distance was created, and so on. The government also extended the lockdown by 14 days. As the lockdown wore on, the government relaxed some restrictions, such as allowing goods traffic by transport trucks and allowing people stranded in various parts of the country to travel by road. Finally, on May 31, 2020, the final Phase 4 of the lockdown came to an end.
+
+During this period of restrictions, many positive changes in the environment were observed, including a significant improvement in air quality (AQI). To determine the true impact of the lockdowns on the pollution index, the Air Quality Index (AQI) data was used to estimate the difference in air quality. By comparing Iran's air quality to major cities such as Paris, Wuhan, Madrid, and Rome, @yazdani2021contrasting contextualised the findings. The data was compared over a five-year period. The study discovered that by drastically reducing human activity, pollutant levels in all cities significantly decreased. Many major cities in major countries face air pollution issues, and the government has implemented various strategies such as setting an emission standard for vehicles, encouraging public transportation and promoting the use of fans instead of air conditioners, as well as banning firecrackers during major festivals, but most of them have not made a significant difference. Delhi and Mumbai are among the most polluted cities in the world, with doctors claiming that the toxic air in Delhi is equivalent to smoking 10 to 15 cigarettes per day - @pinto_2020. (_How Breathing in Indian Cities is Equivalent to Smoking Packs of Cigarettes in One Day_ (29 January,2020), from https://weather.com/en-IN/india/pollution/news/2020-01-29-how-breathing-indian-cities-equivalent-smoking-packs-cigarettes-day).
+
+The pandemic has resulted in self-isolation and lockdowns all over the world. We are now nearly three years into the pandemic, but the origins of the virus remain unknown. Vaccines have been a huge help, but the sheer number of vaccines available has caused some confusion. While many doctors and health experts have conducted research to develop effective anti-virus strategies, many environmental experts believe that strict quarantine measures implemented around the world have given nature time to heal. @benchrif2021air calculate the impact of lockdowns on 21 cities with populations greater than one million people worldwide and discovered a reduction in daily $NO_{2}$ (Nitrogen Dioxide) concentrations ranging from 3 to 58% in all of them. The current study plans to conduct a statistical analysis of the difference in concentrations of major pollutants that comprise the Air Quality Index (AQI) in Delhi and Mumbai in 2020. In India, @lokhandwala2020indirect conducted a similar analysis using an Analysis of Variance (ANOVA) over various pollutants and discovered that not only the air quality but also the river quality had improved across the country. @fu2020impact measured and found the difference in AQI in 20 major cities across six continents where the virus was most severe. The AQI (pollutant concentrations) fell precipitously. Their analysis formed the basis for the current study. They conducted their research using ANOVA, Boxplots, and Tukey statistics. Among all cities in their study, Delhi had the greatest reduction in AQI pollutant concentrations. When we look at the AQI statistics of countries, most of them saw the greatest reductions in Nitrogen Dioxide and Carbon Monoxide due to restrictions on automobile use, which is the primary source of these pollutants. PM (particulate matter) concentrations have also decreased significantly as a result of reduced road traffic. @tripathi2021air conducted their research in four major Indian cities: Delhi, Mumbai, Kolkata, and Hyderabad, and found a significant drop in AQI levels in all of them. Their thorough examination spanned four phases of the lockdown, revealing a gradual increase in pollutant levels as restrictions were lifted. Python programming and its libraries were also used to create the graphs. This demonstrates to prospective researchers how to incorporate programming into their studies or research. @gupta2022air conducted a thorough analysis on a timeline of different phases of lockdown periods as well as before and after the lockdown periods (Pre-Lockdown, 1st Lockdown (March 25 - April 14), 2nd Lockdown (April 15 - May 3), 3rd Lockdown (May 4 - May 17), 4th Lockdown (May 18 - May 31), Unlock Phase 1 (June 1 - June 30), Unlock Phase 2 (June 1 (July 1 – July 31). In addition to the AQI, their research focused on the river water quality index. Their findings eventually concluded that the lockdown was a blessing in disguise, as it could help governments maintain air and water quality by lowering pollution levels while also keeping the economy running. For a detailed analysis of Delhi's AQI, see @mahato2020effect, which concluded a reduction of approximately 57% to 33% in $PM_{10}$ and $PM_{2.5}$ concentrations, respectively. The most intriguing finding was that after just one day of lockdown (March 25th), there is a 40% improvement in air quality. While on the fourth day of the lockdown (March 27th) the $PM_{10}$ and $PM_{2.5}$ concentrations returned to acceptable levels, and the National Air Quality Index had dropped by about 51%.
+
+Interestingly, a National Geographic article by @gardiner_2020 (_Pollution made COVID-19 worse. Now, lockdowns are clearing the air_, National Geographic,https://www.nationalgeographic.com/science/article/pollution-made-the-pandemic-worse-but-lockdowns-clean-the-sky) reported the findings of Harvard researchers who studied the PM 2.5 concentrations in the blood of COVID-19 fatalities and came to the conclusion that the death rate was indeed 15% higher in countries with higher levels of PM 2.5 in the air.PM (particulate matter) are extremely dangerous minute particles in the air that include smoke, sulphate, and metals. Carbon monoxide $CO$ is released into the atmosphere as a result of vehicle emissions and the combustion of fossil fuels. Power plants, fuel combustion, vehicle exhaust, and other sources emit $NO_{2}$, which is composed of nitrogen and oxygen. Furthermore, when considering lockdowns as an alternative strategy to reduce air pollution, the policy implications must be thoroughly considered, as well as whether restricting only a few vehicles from driving during these restrictions has a significant impact or not (@wang2021air). According to @schaefer2021transport, a study that discusses the decrease in demand for public transportation in Hannover (Germany), people switched to bikes and personal cars out of fear. The study by @chang2021covid discusses how increasing or decreasing fares in public transits promotes the use of public transportation, which can help transportation authorities increase ridership and reduce air pollution because metros and subways reduce the combustion of fossil fuels. 
+
+Air quality will undoubtedly improve due to the reduction in construction and industrial activity during the lockdowns, but will this difference be significant enough? The purpose of this study is to see if there was a significant difference in air quality before and after lockdowns in two major Indian cities, Delhi and Mumbai, and if lockdowns can be used as a future strategy to combat air pollution.
+
+# 2) Method
+
+## 2.1) Estimation of Air Quality Index
+
+The Air Quality Index helps the governments across the globe to communicate with people, as to how polluted the air is and the kinds of precautions they need to take if the air category is Severe.
+Each pollutant's baseline is used to calculate the Air Quality Index (AQI). The major pollutants considered when calculating AQI are $PM2.5, PM10, NO, NO_{2}, NOX, CO, SO2, NH_{3} \ \text{and} \ O_{3}$ and their average is taken, with the highest value for each pollutant considered. $PM10,NO_{2} \ and \ CO$ would be considered and evaluated for the current study. The categories of AQI along with their health implications can be defined as below in Table 1 –
+
+```{r, echo=FALSE}
+table = matrix(NA, nrow = 6, ncol = 3)
+colnames(table) = c("Category of AQI","Range","Health Implications")
+table[,1] = c("Good","Satisfactory","Moderately Polluted","Poor","Extremely Poor","Severe")
+
+table[,2] = c("AQI of 0-50","AQI of 51-100","AQI of 101-200", "AQI of 201-300","AQI of 301-400","AQI of 401-500")
+
+table[,3] = c("Air quality is deemed adequate, and air pollution presents minimal or no risk.",
+              "Air quality is acceptable,
+              some pollutants may pose a moderate health risk to few.",
+              "Members of vulnerable groups
+              may suffer health consequences. The general public is unlikely to be harmed.",
+              "People might notice health effects;
+              members of vulnerable groups may notice severe health consequences.",
+              "Health alerts for emergency situations.
+              The general public is much more inclined to be affected.",
+              "Everyone is at risk of experiencing
+              more serious health consequences.")
+
+
+kable(table,format="latex",,caption="CPCB AQI Calculation Framework	") %>% row_spec(0,bold=TRUE) %>% 
+kable_styling() %>% kable_styling(latex_options = "HOLD_position")%>%
+  column_spec(3:4, width = "5cm")%>% 
+       column_spec(1, border_left = T)
+```
+
+The New Delhi, India based Central Pollution Control Board (CPCB 2015) calculation framework was used to assess the AQI in this study.
+
+## 2.2) Area of Study
+
+The study has primarily focused on two populous cities of India - Delhi and Mumbai. According to the United Nations, as of 2018, Delhi is the second-largest mega city of the world, having a population of over 16.78 million. Delhi is located in Northern India and has dual status as a state and city. Mumbai is also known as the financial capital of India. Mumbai is one of India's most populous cities and ranked the 17th most populous city globally with a population of over 20 million. Both of these places are known as car-congested cities and both cities' state governments imposed strict restrictions and shut down all industrial activities. The Indian lockdown was announced in late March and lasted until May, after which a phased lifting of restrictions began. Once, the restrictions were lifted, the human activites resumed in both the cities, which resulted in significant rise in the levels of pollutants.
+
+## 2.3) Dataset Description
+
+The .CSV datasets for this study were obtained from the World's Air Quality Index (WAQI) project, which is an online public dataset, which created datasets after the virus's outbreak covering the pandemic phases, for COVID-19-related research - @projectteam (https://aqicn.org/data-platform/register/) [Datset]. The WAQI project provides the option to choose from different areas and/or AQI stations from a state. The cities' data sources are the Air headquarters in R.K Puram in Delhi and Worli in Mumbai. These two residential colonies were chosen for their central location in their respective states as well as their low population density. By filtering the dataset and selecting the year 2020 for analysis, the dataset for both cities Delhi and Mumbai contained approximately 360-365 samples from various months in 2020. The information for these two cities was obtained from (CPCB - India Central Pollution Control Board). The data required enough samples to make a reasonable comparison across months for the analysis. The .CSV file had 6 major pollutants' ($SO_{2}$, $NO_{2}$, $PM10$, $PM25$, $O_{3}$, $CO$) concentration reports for most days. This gave the confidence to move forward with the analysis and produce reliable results. $PM10$ and $PM25$ particulate concentrations were measured in µg/m3, and other pollutants such as Sulphur dioxide ($SO_{2}$), Nitrogen dioxide ($NO_{2}$), and Carbon monoxide ($CO$) were measured in parts per million (ppm). For the current study, we will focus on primary pollutants $NO_{2}$ and $CO$, and particulate matter $PM10$ concentrations.
+
+## 2.4) Approach and statistical analysis used to explore project goals
+
+R programming (RStudio) is used to conduct our statistical analysis and visualise our results using boxplots, as shown in the Result section below. Boxplots are an excellent tool for comparing a numerical variable (on the y-axis) representing pollutant concentration in our study and a categorical variable (on the x-axis) representing months of the year 2020. A boxplot, in essence, can show the variation in concentration levels across months. The current study shows a decrease in the concentration levels of all three pollutants $NO_{2}$, $CO$, and $PM10$ in both Delhi and Mumbai during the months of March, April, and May 2020 when compared to other months of the year.
+
+Tukey's Honest Significant Difference Test function (Tukey's HSD) is used in the study to examine the difference in mean concentration of the respective pollutants between pairwise months. Tukey's HSD test determines the greatest value of the difference between two pairs. If the p-value for a pair of months is 0.05, we can conclude that the difference between them is significant (assuming our significance level is 0.05). We will mostly compare the months of April and May 2020 to months with few restrictions, such as November and December 2020.
+
+Furthermore, using the linear model function _lm()_ in R, we were able to summarise our findings and conclude that the months of April and May had the lowest levels of $NO 2$, $CO$, and $PM10$ concentrations when compared to other months. A linear model will aid in the description of a continuous response variable (pollutant concentration) as a function of a predictor variable (month / date of year). Similar to Tukey's HSD, the output gives the individual concentration (intercept value) of different months. This allows us to determine which months had the highest and lowest concentrations of various pollutants.
+
+Finally, to draw meaningful conclusions from the statistical analysis, the study employs the _summary()_ function over the ANOVA model (due to the study's use of a categorical variable _Month_ and a continuous variable _Pollutant concentration_). The output shows the intercept values for the 12 months of 2020, demonstrating that the month with the highest intercept value has the highest concentration of the relevant pollutant.
+
+
+# 3) Result
+
+Only the the major pollutants that contribute to the AQI are considered in the current study: nitrogen dioxide ($NO_{2}$), particulate matter ($PM10$), and carbon monoxide ($CO$). From late March 2020 to May 2020, India experienced its first strict lockdown, which was gradually lifted. To answer the main question, whether the lockdown has a significant effect on air quality, or whether there is a significant improvement or difference in air quality if the lockdown is not in place, we examine the months of March, April, and May 2020. By comparing pollutant concentrations in two major cities, Delhi and Mumbai, both of which are among the most polluted in the world, thus can givet a clear picture and justifiable results. The research question _If lockdowns can be used as a strategy to combat air pollution_ would be answered if there is a significant difference in pollutant levels between these three months and the rest of the year. 
+
+The boxplots in Figures below, show the decline in the concentration levels of all three pollutants during the months of March, April, and May 2020 as compared to other months of the year.
+
+
+### 3.1) Analysis for Delhi 
+
+```{r}
+delaqi <- read.csv("r.k.-puram, delhi, delhi, india-air-quality.csv",
+                   header=TRUE) #Read the excel file for Delhi AQI data
+
+#Keep the months in order, by using factor function with levels argument
+delaqi$date <- factor(delaqi$date, levels = c("Jan", "Feb", "Mar","Apr",
+                                              "May","Jun","Jul","Aug",
+                                              "Sep","Oct","Nov","Dec"))
+```
+
+```{r,fig.cap="$NO_{2}$ concentration in Delhi during 2020", fig.show="hold",echo=FALSE}
+#boxplot with NO2 as continuous variable and date as categorical
+boxplot(no2 ~ date, data=delaqi, main = "NO2 levels in Delhi 2020",
+        xlab="Months (2020)",
+        ylab = "NO2 concentration (parts per million)")
+```
+
+The above Figure-1 clearly depicts the difference in the $NO_{2}$ concentration levels between the months of April and November. Since the lockdown was gradually lifted in stages after the month of May, concentration levels have steadily increased, with a peak at the end of the year in November.
+
+This can be statistically verified by using the TukeyHSD function as below which shows the pairwise concentration comparison between months in 2020 with April being lowest. Tukey's Honest Significant Difference Test showed if we were to compare the months of April (month of full lockdown) and November (month with almost no restrictions), there was a significant difference between the two months (with p value of < 0.05).
+
+```{r,results='hide'}
+#TukeyHSD function for NO2 
+#by passing ANOVA function aov to our linear model
+#continuous variable NO2  and categorical variable date
+TukeyHSD(aov(lm(no2 ~ date, data = delaqi)))
+```
+
+```{r,echo=FALSE,results='hide'}
+summary(aov(lm(no2 ~ date, data = delaqi))) #shows significant difference between months, but does not show which is significant
+```
+
+A similar linear model function as well can be used with the $NO_{2}$ concentrations being the continuous variable and the _date_ or month of the year being the categorical variable, as shown in below R code. The output clearly shows the month of April with the lowest concentration of $NO_{2}$ in comparison to other months in the year 2020.
+
+```{r}
+#summary() function to produce result summary
+#of linear model of our data
+summary(lm(no2 ~ date, data = delaqi))
+```
+
+
+```{r, fig.cap="$PM10$ concentration in Delhi during 2020",fig.show="hold",echo=FALSE}
+#boxplot with pm10 as continuous variable and date as categorical
+boxplot(pm10 ~ date, data=delaqi, main = "PM10 levels in Delhi 2020", xlab="Months (2020)", ylab = "PM10 concentration (µg/m3)")
+```
+
+The above Figure-2 clearly depicts the difference in the $PM10$ concentration levels between the months of April and November.
+
+This can be statistically verified by using the TukeyHSD function as below which shows the pairwise concentration comparison between months in 2020. Tukey's Honest Significant Difference Test showed if we were to compare the months of April (month of full lockdown) and November (month with almost no restrictions), there was a significant difference between the two months (with p value of < 0.05).
+
+```{r,results='hide'}
+#TukeyHSD function for PM10
+#by passing ANOVA function aov to our linear model
+#continuous variable PM10 and categorical variable date
+TukeyHSD(aov(lm(pm10 ~ date, data = delaqi)))
+```
+
+A similar linear model function can be used as well,with $PM10$ concentrations being the continuous variable and the _date_ or month of the year being the categorical variable, as shown in below R code. The output clearly shows that during the lockdown period (March, April and May 2020) the concentration of $PM10$ is relatively stable and low in comparison to post unlock period (June - December 2020).
+
+```{r}
+#summary() function to produce result summary
+#of linear model of our data
+summary(lm(pm10 ~ date, data = delaqi))
+```
+
+```{r, fig.cap="$CO$ concentration in Delhi during 2020",fig.show="hold",echo=FALSE}
+#boxplot with co as continuous variable and date as categorical
+boxplot(co ~ date, data=delaqi, main = "CO levels in Delhi 2020", xlab="Months (2020)", ylab = "CO concentration (parts per million)")
+```
+
+The above Figure-3 clearly depicts the difference in the $CO$ concentration levels between the months of April and November.
+
+This can be statistically verified again by using the TukeyHSD function as below which shows the pairwise concentration comparison between months in 2020. Tukey's Honest Significant Difference Test showed if we were to compare the months of April (month of full lockdown) and November (month with almost no restrictions), there was a significant difference between the two months (with p value of < 0.05).
+
+```{r,results='hide'}
+#TukeyHSD function for CO 
+#by passing ANOVA function aov to our linear model
+#continuous variable CO and categorical variable date
+TukeyHSD(aov(lm(co ~ date, data = delaqi)))
+```
+
+A similar linear model function can be used as well,with $CO$ concentrations being the continuous variable and the _date_ or month of the year being the categorical variable, as shown in below R code. The output clearly shows the month of April with the lowest concentration of $CO$ in comparison to other months in the year 2020.
+
+```{r}
+#summary() function to produce result summary
+#of linear model of our data
+summary(lm(co ~ date, data = delaqi))
+```
+
+
+### 3.2) Analysis for Mumbai 
+
+```{r}
+mumaqi <- read.csv("worli,-mumbai, india-air-quality.csv",header=TRUE)
+#Read the excel file for Mumbai AQI data
+
+#Keep the months in order, by using factor function with levels argument
+mumaqi$date <- factor(mumaqi$date, levels = c("Jan", "Feb", "Mar","Apr",
+                                              "May","Jun","Jul","Aug",
+                                              "Sep","Oct","Nov","Dec"))
+```
+
+```{r,fig.cap="$NO_{2}$ concentration in Mumbai during 2020", fig.show="hold",echo=FALSE}
+#boxplot with NO2 as continuous variable and date as categorical
+boxplot(no2 ~ date, data=mumaqi, main = "NO2 levels in Mumbai 2020",
+        xlab="Months (2020)",
+        ylab = "NO2 concentration (parts per million)")
+```
+
+The above Figure-4 clearly depicts the difference in the $NO_{2}$ concentration levels between the months of April and November.
+
+This can be statistically verified by using the TukeyHSD function as below which shows the pairwise concentration comparison between months in 2020 with April being lowest. Tukey's Honest Significant Difference Test showed if we were to compare the months of April (month of full lockdown) and November (month with almost no restrictions), there was a significant difference between the two months (with p value of < 0.05).
+
+```{r,results='hide'}
+#TukeyHSD function for NO2 
+#by passing ANOVA function aov to our linear model
+#continuous variable NO2 and categorical variable date
+TukeyHSD(aov(lm(no2 ~ date, data = mumaqi)))
+```
+
+```{r,echo=FALSE,results='hide'}
+summary(aov(lm(no2 ~ date, data = mumaqi))) #shows significant difference between months, but does not show which is significant
+```
+
+A similar linear model function can be used as well,with the $NO_{2}$ concentrations being the continuous variable and the _date_ or month of the year being the categorical variable, as shown in below R code. The output clearly shows the month of April with the lowest concentration of $NO_{2}$ in comparison to other months in the year 2020.
+
+```{r}
+#summary() function to produce result summary
+#of linear model of our data
+summary(lm(no2 ~ date, data = mumaqi))
+```
+
+
+```{r, fig.cap="$PM10$ concentration in Mumbai during 2020",fig.show="hold",echo=FALSE}
+#boxplot with pm10 as continuous variable and date as categorical
+boxplot(pm10 ~ date, data=mumaqi, main = "PM10 levels in Mumbai 2020", xlab="Months (2020)", ylab = "PM10 concentration (µg/m3)")
+```
+
+The above Figure-5 clearly depicts the difference in the $PM10$ concentration levels between the months of April and November.
+
+This can be statistically verified by using the TukeyHSD function as below which shows the pairwise concentration comparison between months in 2020. Tukey's Honest Significant Difference Test showed if we were to compare the months of April (month of full lockdown) and December (month with almost no restrictions), there was a significant difference between the two months (with p value of < 0.05).
+
+```{r,results='hide'}
+#TukeyHSD function for PM10 
+#by passing ANOVA function aov to our linear model
+#continuous variable PM10 and categorical variable date
+TukeyHSD(aov(lm(pm10 ~ date, data = mumaqi)))
+```
+
+A similar linear model function can be used as well,with the $PM10$ concentrations being the continuous variable and the _date_ or month of the year being the categorical variable, as shown in below R code. The output clearly shows that during the lockdown period the month of May 2020 showed lowest concentration of $PM10$ in the whole year.
+
+```{r}
+#summary() function to produce result summary
+#of linear model of our data
+summary(lm(pm10 ~ date, data = mumaqi))
+```
+
+```{r, fig.cap="$CO$ concentration in Mumbai during 2020",fig.show="hold",echo=FALSE}
+#boxplot with co as continuous variable and date as categorical
+boxplot(co ~ date, data=mumaqi, main = "CO levels in Mumbai 2020", xlab="Months (2020)", ylab = "CO concentration (parts per million)")
+```
+
+The above Figure-6 clearly depicts the difference in the $CO$ concentration levels between the months of April and November.
+
+This can be statistically verified again by using the TukeyHSD function as below which shows the pairwise concentration comparison between months in 2020. Tukey's Honest Significant Difference Test showed if we were to compare the months of April (month of full lockdown) and November (month with almost no restrictions), there was a significant difference between the two months (with p value of < 0.05).
+
+```{r,results='hide'}
+#TukeyHSD function for CO 
+#by passing ANOVA function aov to our linear model
+#continuous variable CO and categorical variable date
+TukeyHSD(aov(lm(co ~ date, data = mumaqi))) 
+```
+
+A similar linear model function can be used as well, with the $CO$ concentrations being the continuous variable and the _date_ or month of the year being the categorical variable, as shown in below R code. The output clearly shows the month of April with the lowest concentration of $CO$ in comparison to other months in the year 2020.
+
+```{r}
+#summary() function to produce result summary
+#of linear model of our data
+summary(lm(co ~ date, data = mumaqi))
+```
+
+
+# 4) Discussion
+
+The current study attempted to investigate the impact of COVID-19 lockdowns on the Air Quality Index in Delhi and Mumbai in March, April, and May of early 2020. The main pollutants in this study were $NO_{2}$, $CO$, and $PM10$. The findings clearly demonstrate a significant improvement in air quality during lockdowns in both cities, owing to a decrease in pollutant concentrations. In addition, after the lockdown restrictions were lifted, the concentrations of $NO_{2}$, $CO$, AND $PM10$ began to rise in both cities. This helped us conclude that industrial pollutants and vehicular emissions are the major sources of pollution in these cities. Significant reductions in air pollution, on the other hand, can be achieved through careful planning and phased restrictions on industrial activities, vehicle movement, and traffic. (@mahato2020effect). This helped us answer our question about whether lockdowns should be considered as an alternative strategy for dealing with air pollution in the future because it requires the government to consider economic implications.
+
+The discovery in current study is related to the work of @benchrif2021air, who investigated the impact of lockdowns on the Air Quality Index in 21 cities around the world with populations greater than one million people. They also concluded that PM concentrations in 2020 would be lower than they were prior to the pandemic.@wang2021air, on the other hand, discovered that the reductions in $NO_{2}$ concentrations were more significant than the reductions in $PM$ concentrations. This holds true in the current research as well, where the difference in $PM$ levels is slightly smaller than the difference in $NO_{2}$ levels. The current research found a significant increase in the levels of these pollutants after the month of May, which is particularly significant given that Delhi and Mumbai are two of India's largest cities and major industrial centres. This demonstrates how geography can influence concentration levels in different cities around the world, depending on factors such as the number and type of industries in a city, population density, vehicular emissions, biomass burning, thermal power generation, and others (@benchrif2021air).
+
+In comparison to the findings of @tripathi2021air's study, which shows an increase in pollutant levels in cities such as Delhi and Kolkata following a lockdown, the findings are similar for this research. This demonstrated that major urban cities with dense populations and a diverse range of industries will show the most dramatic improvement and results in these types of analyses. @yazdani2021contrasting contrasted Tehran's AQI levels with those of four other major cities: Paris, Wuhan, Rome, and Madrid. Each comparison proved significant, and air quality improved significantly in all cities. Wuhan, the most densely populated city studied and home to a diverse range of industries, experienced the greatest reduction in AQI, with a 22% improvement.
+
+@mahato2020effect talk about significant improvements in air quality in parts of Delhi where energy footprints were high and lockdown guidelines were followed. Their study also discuss briefly about how a 2-4 day lockdown can be implemented to combat air pollution, but the economic implications must be thoroughly investigated. This relates to current study findings about the importance of planning for a systemic approach to tackling air pollution in megacities with diverse economies and dense populations that include migrants, such as Delhi or Mumbai. Countries such as Japan and South Korea, on the other hand, did not implement strict lockdowns and instead relied on infected individuals' contact tracing, intensive testing, and social distancing, which worked well for them. In contrast to other European countries, Germany placed a strong emphasis on social distance. People in Berlin, for example, could only leave their house if they were alone or with another member of the same household. Similarly, Australia limited public gatherings to two people and advised residents to stay at home and go out only for necessary activities. This further demonstrated that, when compared to other countries, Berlin, Germany, and Sydney, Australia experienced the least reduction in $NO_{2}$ levels (@fu2020impact). This discovery adds another dimension to the research, concluding that a ban on industrial activities and a reduction in vehicular movements are the most effective methods of combating air pollution.
+
+Overall, the environmental impact of COVID-19 lockdowns and restrictions can be viewed as a blessing in disguise, as described by @lokhandwala2020indirect, who highlighted how nature recovered in various parts of India after 1-2 months of restrictions. Lockdowns and halts in industrial and transportation operations have assisted in identifying the major sources of air pollution. @chang2021covid discuss how public transportation demand in Taiwan has decreased since the pandemic began and the government imposed restrictions. When the public is afraid of contracting and becoming infected while using public transportation, such as subways and buses, effective public transportation policies are required. Raising or lowering fares during peak or off-peak hours to smooth demand throughout the day allows public transportation to return to normal levels, further reducing air pollution. @schaefer2021transport conducted their research in the city of Hannover, Germany, and discovered that people avoided public transportation due to environmental concerns. These studies produce interesting results that can help governments develop systematic plans to combat not only air pollution, but also water pollution (@gupta2022air), by controlling industrial activities and reducing private transportation, while also taking economic implications into account.
+
+\newpage
+
+# References
